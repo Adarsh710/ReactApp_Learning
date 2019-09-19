@@ -8,6 +8,7 @@ const key = require('../../config/key');
 
 //Load Input Validator
 const validateRegisterInput = require('../../validation/register')
+const validateLoginInput = require('../../validation/login')
 
 
 const router = express.Router();
@@ -72,6 +73,13 @@ router.post('/register', (req, res) => {
 //@desc  :  login user
 //@access:  Public
 router.post('/login', (req, res) => {
+
+    const {errors, isValid} = validateLoginInput(req.body);
+
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 
@@ -80,9 +88,8 @@ router.post('/login', (req, res) => {
         email
     }).then(user => {
         if (!user) {
-            res.status(404).json({
-                email: 'User not found'
-            });
+            errors.email = 'User not found';
+            res.status(404).json(errors);
         }
 
         //password check
@@ -110,9 +117,8 @@ router.post('/login', (req, res) => {
                         })
                     })
                 } else {
-                    res.status(400).json({
-                        password: 'Incorrect password'
-                    });
+                    errors.password = 'Incorrect password';
+                    res.status(400).json(errors);
                 }
             })
             .catch(err => console.log(err));
