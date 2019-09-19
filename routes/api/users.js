@@ -55,4 +55,37 @@ router.post('/register', (req, res) => {
     });
 });
 
+//@Route :  GET /users/login
+//@desc  :  login user
+//@access:  Public
+router.post('/login', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    //find user by email
+    User.findOne({
+        email
+    }).then(user => {
+        if (!user) {
+            res.status('404').json({
+                email: 'User not found'
+            });
+        }
+
+        //password check
+        bcrypt.compare(password, user.password).then(matched => {
+                if (matched) {
+                    res.status('200').json({
+                        msg: 'You are in'
+                    });
+                } else {
+                    res.status('400').json({
+                        password: 'Incorrect password'
+                    });
+                }
+            })
+            .catch(err => console.log(err));
+    });
+});
+
 module.exports = router;
