@@ -6,6 +6,9 @@ const passport = require('passport');
 
 const key = require('../../config/key');
 
+//Load Input Validator
+const validateRegisterInput = require('../../validation/register')
+
 
 const router = express.Router();
 
@@ -23,6 +26,12 @@ router.get('/', (req, res) => res.json({
 //@desc  :  Register user
 //@access:  Public
 router.post('/register', (req, res) => {
+    const {errors, isValid} = validateRegisterInput(req.body);
+
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
+
     User.findOne({
         email: req.body.email
     }).then(user => {
@@ -71,7 +80,7 @@ router.post('/login', (req, res) => {
         email
     }).then(user => {
         if (!user) {
-            res.status('404').json({
+            res.status(404).json({
                 email: 'User not found'
             });
         }
@@ -91,7 +100,7 @@ router.post('/login', (req, res) => {
                         expiresIn: 3600
                     }, (err, token) => {
                         if (err) {
-                            res.status('400').json({
+                            res.status(400).json({
                                 msg: 'Error in token genration'
                             });
                         }
@@ -101,7 +110,7 @@ router.post('/login', (req, res) => {
                         })
                     })
                 } else {
-                    res.status('400').json({
+                    res.status(400).json({
                         password: 'Incorrect password'
                     });
                 }
