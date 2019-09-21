@@ -26,7 +26,7 @@ router.get(
     const errors = {};
 
     Profile.findOne({ user: req.user.id })
-      .populate('user', ['name', 'avatar'])
+      .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
           errors.noprofile = "Profile not found";
@@ -40,10 +40,51 @@ router.get(
   }
 );
 
+//@Route    GET /profile/user_handle/:handle
+//@desc     Get profile handle
+//@Access   Public
+router.get("/user_handle/:handle", (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ handle: req.params.handle })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "No profile found with this handle";
+        res.status(404).json(errors);
+      }
+
+      res.json(profile);
+    })
+    .catch(err =>
+      res.status(404).json({ profile: "No profile found with this handle" })
+    );
+});
+
+//@Route    GET /profile/user_ID/:userID
+//@desc     Get profile ID
+//@Access   Public
+router.get("/user_ID/:userID", (req, res) => {
+  const errors = {};
+
+  Profile.findOne({ user: req.params.userID })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "No profile found with this ID";
+        res.status(404).json(errors);
+      }
+
+      res.json(profile);
+    })
+    .catch(err =>
+      res.status(404).json({ profile: "No profile found with this ID" })
+    );
+});
+
 //@Route    POST /profile
 //@desc     Creat current users' profile
 //@Access   Private
-
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
