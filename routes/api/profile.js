@@ -6,6 +6,8 @@ const router = express.Router();
 
 //Load Validation
 const validateProfileInput = require("../../validation/profile");
+const validateExperienceInput = require("../../validation/experience");
+const validateEducationInput = require("../../validation/education");
 
 //Load Profile model
 const Profile = require("../../models/Profile");
@@ -140,6 +142,74 @@ router.post(
         });
       }
     });
+  }
+);
+
+//@Route    POST /profile/experience
+//@desc     Add experience to profile
+//@Access   Private
+router.post(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateExperienceInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const newExp = {
+          title: req.body.title,
+          company: req.body.company,
+          location: req.body.location,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        };
+
+        //Add newExp object to experience
+        profile.experience.unshift(newExp);
+
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.status(400).json(err));
+  }
+);
+
+//@Route    POST /profile/education
+//@desc     Add education to profile
+//@Access   Private
+router.post(
+  "/education",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEducationInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        const newExp = {
+          school: req.body.school,
+          degree: req.body.degree,
+          stream: req.body.stream,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        };
+
+        //Add newExp object to education
+        profile.education.unshift(newExp);
+
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 
