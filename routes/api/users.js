@@ -23,7 +23,7 @@ router.get('/', (req, res) => res.json({
     route: 'hostname/users/'
 }));
 
-//@Route :  GET /users/register
+//@Route :  POST /users/register
 //@desc  :  Register user
 //@access:  Public
 router.post('/register', (req, res) => {
