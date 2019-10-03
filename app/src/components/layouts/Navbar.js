@@ -6,6 +6,7 @@ class Navbar extends Component {
   render() {
     return (
       <div className="nav">
+        <input type="checkbox" id="nav-check" />
         <div className="nav-header">
           <div className="nav-title">
             <Link className="brand" to="/">
@@ -14,7 +15,7 @@ class Navbar extends Component {
           </div>
         </div>
         <div className="nav-btn">
-          <label>
+          <label htmlFor="nav-check">
             <span></span>
             <span></span>
             <span></span>

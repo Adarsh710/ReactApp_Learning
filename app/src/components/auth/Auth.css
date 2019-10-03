@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  text-align: center;
+  margin: auto;
+  width: fit-content;
+  font-family: sans-serif;
+  height: inherit;
+}
+
+.signup, .login {
+  margin: 2em 0;
+}
+
+.heading {
+  margin: inherit;
+}
+
+.heading h1 {
+  margin-bottom: 0.3em;
+}
+
+.form input {
+  background-color: rgb(241, 241, 241);
+  width: 400px;
+  margin: 0.4em auto;
+  display: block;
+  border-radius: 25px;
+  outline: none;
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+}
+
+.form p {
+  font-size: 13px;
+  margin: -0.6em auto 1.2em;
+}
+
+.form input[type="submit"] {
+  background-color: dodgerblue;
+  box-shadow: 2px 2px 6px rgb(128, 128, 128);
+}
+
+.form input[type="submit"]:hover {
+  background-color: rgb(30, 133, 236);
+}
+
+.form input[type="submit"]:active {
+  background-color: rgb(28, 117, 206);
+  box-shadow: 1px 1px 4px rgb(128, 128, 128);
+}
+
+@media screen and (max-width: 500px){
+  .form input {
+    width: 300px;
+  }
+  .form p {
+    width: 250px;
+  }
+}

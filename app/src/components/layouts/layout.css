@@ -8,8 +8,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #000;
@@ -26,6 +26,8 @@ body {
   background: #006a75;
 }
 
+
+/* Navgation CSS */
 .nav {
   height: 50px;
   width: 100%;
@@ -53,6 +55,7 @@ body {
 }
 
 .nav > .nav-links {
+  height: 100%;
   display: inline;
   float: right;
   margin-right: 100px;
@@ -61,6 +64,7 @@ body {
 
 .nav > .nav-links > .auth {
   display: inline-block;
+  height: 100%;
   padding: 10px;
   margin: 0 20px;
   text-decoration: none;
@@ -73,6 +77,11 @@ body {
 .nav > .nav-links > .auth:hover {
   background-color: rgb(2, 2, 24);
 }
+
+.nav > #nav-check {
+  display: none;
+}
+/* End of Navigation CSS */
 
 /* Landing page css */
 .heroimage > .img1 {
@@ -113,15 +122,17 @@ body {
     top: 50px;
     left: 0px;
   }
-  .nav > .nav-links > button {
+  .nav > .nav-links > .auth {
     display: block;
-    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 10px 15px;
   }
   .nav > #nav-check:not(:checked) ~ .nav-links {
     height: 0px;
   }
   .nav > #nav-check:checked ~ .nav-links {
-    height: calc(100vh - 50px);
+    height: calc(60vh - 50px);
     overflow-y: auto;
   }
 }
