@@ -37,6 +37,7 @@ class Login extends Component {
           </div>
           <form className="form" onSubmit={this.onSubmit}>
             <input
+              className="form-input"
               type="email"
               name="email"
               value={this.state.email}
@@ -45,6 +46,7 @@ class Login extends Component {
               required
             />
             <input
+              className="form-input"
               type="password"
               name="password"
               value={this.state.password}
@@ -52,7 +54,7 @@ class Login extends Component {
               placeholder="Password"
               required
             />
-            <input type="submit" name="submit" />
+            <input className="form-input" type="submit" name="submit" />
           </form>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import classnames from "classnames";
 import "./Auth.css";
 
 class Register extends Component {
@@ -32,12 +33,14 @@ class Register extends Component {
     };
 
     axios
-      .post('/users/register', newUser)
+      .post("/users/register", newUser)
       .then(res => console.log(res.data))
-      .catch(err => console.log(err.response.data));
+      .catch(err => this.setState({ errors: err.response.data }));
   }
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="container">
         <div className="signup">
@@ -45,21 +48,33 @@ class Register extends Component {
             <h1>Register</h1>
             <p>Create your account</p>
           </div>
-          <form className="form" onSubmit={this.onSubmit}>
+          <form className="form" onSubmit={this.onSubmit} noValidate>
             <input
+              className={classnames("form-input", {
+                "is-invalid": errors.name
+              })}
               type="text"
               name="name"
               value={this.state.name}
               placeholder="Name"
               onChange={this.onChange}
             />
+            {errors.name && (
+              <div className="invalid-feedback">{errors.name}</div>
+            )}
             <input
+              className={classnames("form-input", {
+                "is-invalid": errors.email
+              })}
               type="email"
               name="email"
               value={this.state.email}
               placeholder="Email Address"
               onChange={this.onChange}
             />
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
+            )}
             <p>
               <small className="small">
                 This site uses Gravatar so if you want a profile picture then
@@ -67,20 +82,32 @@ class Register extends Component {
               </small>
             </p>
             <input
+              className={classnames("form-input", {
+                "is-invalid": errors.password
+              })}
               type="password"
               name="password1"
               value={this.state.password1}
               placeholder="Password"
               onChange={this.onChange}
             />
+            {errors.password && (
+              <div className="invalid-feedback">{errors.password}</div>
+            )}
             <input
+              className={classnames("form-input", {
+                "is-invalid": errors.password2
+              })}
               type="password"
               name="password2"
               value={this.state.password2}
               placeholder="Confirm Password"
               onChange={this.onChange}
             />
-            <input type="submit" name="submit" />
+            {errors.password2 && (
+              <div className="invalid-feedback">{errors.password2}</div>
+            )}
+            <input className="form-input" type="submit" name="submit" />
           </form>
         </div>
       </div>

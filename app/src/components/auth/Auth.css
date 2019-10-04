@@ -23,7 +23,7 @@
   margin-bottom: 0.3em;
 }
 
-.form input {
+.form > .form-input {
   background-color: rgb(241, 241, 241);
   width: 400px;
   margin: 0.4em auto;
@@ -33,6 +33,18 @@
   font-size: 1em;
   padding: 10px;
   border: none;
+}
+
+.form > .is-invalid{
+  border: 1px solid red;
+}
+
+.form > .invalid-feedback{
+  padding-left: 1em;
+  text-align: left;
+  color: red;
+  font-size: .6em;
+  margin: -0.6em auto 1em;
 }
 
 .form p {
@@ -55,7 +67,7 @@
 }
 
 @media screen and (max-width: 500px){
-  .form input {
+  .form > .form-input {
     width: 300px;
   }
   .form p {
