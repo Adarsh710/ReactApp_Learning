@@ -69,7 +69,7 @@ router.post('/register', (req, res) => {
     });
 });
 
-//@Route :  GET /users/login
+//@Route :  POST /users/login
 //@desc  :  login user
 //@access:  Public
 router.post('/login', (req, res) => {
@@ -113,7 +113,7 @@ router.post('/login', (req, res) => {
                         }
                         res.json({
                             success: true,
-                            token: 'Bearer ' + token
+                            token: 'Bearer' + token
                         })
                     })
                 } else {
