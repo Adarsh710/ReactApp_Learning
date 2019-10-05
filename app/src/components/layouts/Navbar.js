@@ -1,9 +1,40 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 import "./layout.css";
 
 class Navbar extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logoutUser();
+  }
+
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const authLinks = (
+      <div className="nav-links">
+        <Link className="auth" onClick={this.onLogoutClick.bind(this)} to=''>
+          <img src={user.avatar} alt={user.name} style={{width: '30px', marginRight: '10px', borderRadius: '50%'}} title={user.name} />
+          Logout
+        </Link>
+      </div>
+    );
+
+    const guestLinks = (
+      <div className="nav-links">
+        <Link className="auth" to="/register">
+          Register
+        </Link>
+
+        <Link className="auth" to="/login">
+          Login
+        </Link>
+      </div>
+    );
+
     return (
       <div className="nav">
         <input type="checkbox" id="nav-check" />
@@ -21,18 +52,22 @@ class Navbar extends Component {
             <span></span>
           </label>
         </div>
-
-        <div className="nav-links">
-          <Link className="auth" to="/register">
-            Register
-          </Link>
-          <Link className="auth" to="/login">
-            Login
-          </Link>
-        </div>
+        {isAuthenticated ? authLinks : guestLinks}
       </div>
     );
   }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const maoStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  maoStateToProps,
+  { logoutUser }
+)(Navbar);
